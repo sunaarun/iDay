@@ -23,22 +23,23 @@ def read_documents():
         res.append(doc.to_dict())
     return res
 
+# a fuction that read only one document
+def read_one_doc(id, collection_name):
+    doc = db.collection(collection_name).document(id).get()
+    if doc.exists:
+        print(f"Document data: {doc.to_dict()}")
+        return doc.to_dict()
+    else:
+        print("No such Document")
+
+
+# read_one_doc("uoNqtsuiuD3fpqiiWOxx", "Teams")
 
 # a function that add a document to our db
 def add_doc(data):
     doc_ref = db.collection("Teams").document()
     doc_ref.set(data)
     print(doc_ref)
-
-add_doc(data)
-
-def delete_doc(id, collection_name):
-    id = db.collection(collection_name).document(id).get()
-    if id.exists:
-        id.reference.delete()
-        print("Deleted doc")
-    else:
-        print("No such Document")
 
 
 # update a document
@@ -48,16 +49,20 @@ def update_doc(id, data, collection_name):
     if doc_ref.get().exists:
         doc_ref.update(data)
         print("Document Updated")
+        return doc_ref.get().to_dict()
     else:    
+        return "No such Document"
+
+
+def delete_doc(id, collection_name):
+    id = db.collection(collection_name).document(id).get()
+    if id.exists:
+        id.reference.delete()
+        print("Deleted doc")
+    else:
         print("No such Document")
 
+# delete_doc("1x2DG36yNa1mwbA3Q7y9", "Teams")        
 
-read_documents()
-d= {
-    "student_name": " 3355Bilal",
-    "student_email": "hassan@gmail.com",    
-    "student_team": "Null",
-}
-doc = db.collection('Teams').document("1x2DG36yNa1mwbA3Q7y9")
-id=doc.get()
-update_doc(id.id, d, "Teams")
+
+        
