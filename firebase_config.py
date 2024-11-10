@@ -9,9 +9,9 @@ db = firestore.client()
 
 # create some data to insert into db
 data = {
-    "student-name": "Dang Nguyen",
-    "student-email": "haidangnng@gmail.com",
-    "student-team": "Null",
+    "student_name": "Dang Nguyen",
+    "student_email": "haidangnng@gmail.com",
+    "student_team": "Null",
 }
 
 
@@ -30,6 +30,7 @@ def add_doc(data):
     doc_ref.set(data)
     print(doc_ref)
 
+add_doc(data)
 
 def delete_doc(id, collection_name):
     id = db.collection(collection_name).document(id).get()
@@ -42,9 +43,21 @@ def delete_doc(id, collection_name):
 
 # update a document
 def update_doc(id, data, collection_name):
-    doc_ref = db.collection(collection_name).document()
-    doc_ref.update({"_id": id}, {"$set": data})
+    # Get a reference to the document
+    doc_ref = db.collection(collection_name).document(id)
+    if doc_ref.get().exists:
+        doc_ref.update(data)
+        print("Document Updated")
+    else:    
+        print("No such Document")
 
 
 read_documents()
-
+d= {
+    "student_name": " 3355Bilal",
+    "student_email": "hassan@gmail.com",    
+    "student_team": "Null",
+}
+doc = db.collection('Teams').document("1x2DG36yNa1mwbA3Q7y9")
+id=doc.get()
+update_doc(id.id, d, "Teams")

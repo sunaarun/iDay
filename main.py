@@ -7,14 +7,6 @@ from firebase_config import add_doc, read_documents
 app = FastAPI()
 
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
 
 
 @app.get("/documents")
@@ -34,9 +26,9 @@ def read_data():
 def create_document(name, email, team):
     data = add_doc(
         {
-            "student-team": team,
-            "student-email": email,
-            "student-name": name,
+            "student_team": team,
+            "student_email": email,
+            "student_name": name,
         }
     )
     return data
