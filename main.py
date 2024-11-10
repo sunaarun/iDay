@@ -16,14 +16,30 @@ def read_root():
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
 
+
 @app.get("/documents")
-async  def read_data() :
-    data= await read_documents()
+def read_data():
+    data = read_documents()
     return data
-    # if data.empty: return
 
 
+# data = {
+#     "student-name": "Dang Nguyen",
+#     "student-email": "haidangnng@gmail.com",
+#     "student-team": "Null",
+# }
 
+
+@app.post("/documents")
+def create_document(name, email, team):
+    data = add_doc(
+        {
+            "student-team": team,
+            "student-email": email,
+            "student-name": name,
+        }
+    )
+    return data
 
 
 # @app.post('/document')
